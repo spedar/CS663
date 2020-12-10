@@ -1,0 +1,285 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>MyMainScript</title><meta name="generator" content="MATLAB 9.9"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2020-09-29"><meta name="DC.source" content="myMainScript.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>MyMainScript</h1><!--introduction--><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">First image: GRASS</a></li><li><a href="#2">Second image: HONEYCOMB</a></li><li><a href="#3">Third image: BARBARA</a></li><li><a href="#4">SPATIAL MASK GAUSSIAN</a></li></ul></div><h2 id="1">First image: GRASS</h2><pre class="codeinput">tic;
+fprintf(<span class="string">'\nThe images of the grass:\n'</span>)
+path1 = <span class="string">"../data/grass.png"</span>;
+im1 = imread(path1);
+sp1 = 0.7;
+in1 = 0.18;
+figure, my_show(im1); title(<span class="string">'Original image'</span>);
+im_noise1 = myNoise(im1);
+figure, my_show(im_noise1); title(<span class="string">'Noisy image'</span>);
+im_filt1 = myBilateralFiltering(im_noise1,sp1,in1);
+figure, my_show(im_filt1); title(<span class="string">'Filtered image'</span>);
+rmsd1 = myRMSD(im1,im_filt1);
+rmsd1_i = myRMSD(im1,myBilateralFiltering(im_noise1,0.9*sp1,in1));
+rmsd1_ii = myRMSD(im1,myBilateralFiltering(im_noise1,1.1*sp1,in1));
+rmsd1_iii = myRMSD(im1,myBilateralFiltering(im_noise1,sp1,0.9*in1));
+rmsd1_iv = myRMSD(im1,myBilateralFiltering(im_noise1,sp1,1.1*in1));
+
+fprintf(<span class="string">'The optimal values for SpatialSigma and IntensitySigma are:\n'</span>)
+fprintf(<span class="string">'space_sig = %f , intensity_sig = %f'</span>, sp1, in1 )
+fprintf(<span class="string">'\nThe optimal rmsd is = %f \n'</span>, rmsd1)
+fprintf(<span class="string">'The 4 rmsd values for varying standard deviations are :\n'</span>)
+fprintf(<span class="string">'(0.9sp,in)  i) %f \n'</span>,rmsd1_i)
+fprintf(<span class="string">'(1.1sp,in)  ii) %f \n'</span>,rmsd1_ii)
+fprintf(<span class="string">'(sp,0.9in)  iii) %f \n'</span>,rmsd1_iii)
+fprintf(<span class="string">'(sp,1.1in)  iv) %f \n\n'</span>,rmsd1_iv)
+toc;
+</pre><pre class="codeoutput">
+The images of the grass:
+The optimal values for SpatialSigma and IntensitySigma are:
+space_sig = 0.700000 , intensity_sig = 0.180000
+The optimal rmsd is = 7.783029 
+The 4 rmsd values for varying standard deviations are :
+(0.9sp,in)  i) 7.886987 
+(1.1sp,in)  ii) 7.821745 
+(sp,0.9in)  iii) 7.786468 
+(sp,1.1in)  iv) 7.801721 
+
+Elapsed time is 1.231120 seconds.
+</pre><img vspace="5" hspace="5" src="myMainScript_01.png" alt=""> <img vspace="5" hspace="5" src="myMainScript_02.png" alt=""> <img vspace="5" hspace="5" src="myMainScript_03.png" alt=""> <h2 id="2">Second image: HONEYCOMB</h2><pre class="codeinput">tic;
+fprintf(<span class="string">'\nFor the honeycomb images:\n'</span>)
+path2 = <span class="string">"../data/honeyCombReal.png"</span>;
+im2 = imread(path2);
+sp2 = 0.8;
+in2 = 0.1;
+figure, my_show(im2); title(<span class="string">'Original image'</span>);
+im_noise2 = myNoise(im2);
+figure, my_show(im_noise2); title(<span class="string">'Noisy image'</span>);
+im_filt2 = myBilateralFiltering(im_noise2,sp2,in2);
+figure, my_show(im_filt2); title(<span class="string">'Filtered image'</span>);
+rmsd2 = myRMSD(im2,im_filt2);
+rmsd2_i = myRMSD(im2,myBilateralFiltering(im_noise2,0.9*sp2,in2));
+rmsd2_ii = myRMSD(im2,myBilateralFiltering(im_noise2,1.1*sp2,in2));
+rmsd2_iii = myRMSD(im2,myBilateralFiltering(im_noise2,sp2,0.9*in2));
+rmsd2_iv = myRMSD(im2,myBilateralFiltering(im_noise2,sp2,1.1*in2));
+
+fprintf(<span class="string">'The optimal values for SpatialSigma and IntensitySigma are:\n'</span>)
+fprintf(<span class="string">'space_sig = %f , intensity_sig = %f'</span>, sp2, in2 )
+fprintf(<span class="string">'\nThe optimal rmsd is = %f \n'</span>, rmsd2)
+fprintf(<span class="string">'The 4 rmsd values for varying standard deviations are :\n'</span>)
+fprintf(<span class="string">'(0.9sp,in)  i) %f \n'</span>,rmsd2_i)
+fprintf(<span class="string">'(1.1sp,in)  ii) %f \n'</span>,rmsd2_ii)
+fprintf(<span class="string">'(sp,0.9in)  iii) %f \n'</span>,rmsd2_iii)
+fprintf(<span class="string">'(sp,1.1in)  iv) %f \n\n'</span>,rmsd2_iv)
+toc;
+</pre><pre class="codeoutput">
+For the honeycomb images:
+The optimal values for SpatialSigma and IntensitySigma are:
+space_sig = 0.800000 , intensity_sig = 0.100000
+The optimal rmsd is = 11.630853 
+The 4 rmsd values for varying standard deviations are :
+(0.9sp,in)  i) 11.678195 
+(1.1sp,in)  ii) 11.636229 
+(sp,0.9in)  iii) 11.660659 
+(sp,1.1in)  iv) 11.632214 
+
+Elapsed time is 3.037531 seconds.
+</pre><img vspace="5" hspace="5" src="myMainScript_04.png" alt=""> <img vspace="5" hspace="5" src="myMainScript_05.png" alt=""> <img vspace="5" hspace="5" src="myMainScript_06.png" alt=""> <h2 id="3">Third image: BARBARA</h2><pre class="codeinput">tic;
+fprintf(<span class="string">'For the Barbara images:\n'</span>)
+path = <span class="string">'../data/barbara.mat'</span>;
+im3 = uint8(load(path).imageOrig) ;
+<span class="comment">%im3 = imread(path3);</span>
+sp3 = 0.9;
+in3 = 0.07;
+figure, my_show(im3); title(<span class="string">'Original image'</span>);
+im_noise3 = myNoise(im3);
+figure, my_show(im_noise3); title(<span class="string">'Noisy image'</span>);
+im_filt3 = myBilateralFiltering(im_noise3,sp3,in3);
+figure, my_show(im_filt3); title(<span class="string">'Filtered image'</span>);
+rmsd3 = myRMSD1(im3,im_filt3);
+rmsd3_i = myRMSD1(im3,myBilateralFiltering(im_noise3,0.9*sp3,in3));
+rmsd3_ii = myRMSD1(im3,myBilateralFiltering(im_noise3,1.1*sp3,in3));
+rmsd3_iii = myRMSD1(im3,myBilateralFiltering(im_noise3,sp3,0.9*in3));
+rmsd3_iv = myRMSD1(im3,myBilateralFiltering(im_noise3,sp3,1.1*in3));
+
+fprintf(<span class="string">'The optimal values for SpatialSigma and IntensitySigma are:\n'</span>)
+fprintf(<span class="string">'space_sig = %f , intensity_sig = %f'</span>, sp3, in3 )
+fprintf(<span class="string">'\nThe optimal rmsd is = %f \n'</span>, rmsd3)
+fprintf(<span class="string">'The 4 rmsd values for varying standard deviations are :\n'</span>)
+fprintf(<span class="string">'(0.9sp,in)  i) %f \n'</span>,rmsd3_i)
+fprintf(<span class="string">'(1.1sp,in)  ii) %f \n'</span>,rmsd3_ii)
+fprintf(<span class="string">'(sp,0.9in)  iii) %f \n'</span>,rmsd3_iii)
+fprintf(<span class="string">'(sp,1.1in)  iv) %f \n\n'</span>,rmsd3_iv)
+toc;
+</pre><pre class="codeoutput">For the Barbara images:
+The optimal values for SpatialSigma and IntensitySigma are:
+space_sig = 0.900000 , intensity_sig = 0.070000
+The optimal rmsd is = 15.251291 
+The 4 rmsd values for varying standard deviations are :
+(0.9sp,in)  i) 15.262710 
+(1.1sp,in)  ii) 15.256939 
+(sp,0.9in)  iii) 15.258031 
+(sp,1.1in)  iv) 15.275350 
+
+Elapsed time is 10.757923 seconds.
+</pre><img vspace="5" hspace="5" src="myMainScript_07.png" alt=""> <img vspace="5" hspace="5" src="myMainScript_08.png" alt=""> <img vspace="5" hspace="5" src="myMainScript_09.png" alt=""> <h2 id="4">SPATIAL MASK GAUSSIAN</h2><pre class="codeinput">[a,b]=meshgrid(-10:10,-10:10);
+spaceGauss = exp(-(a.^2+b.^2)/(2*5^2));
+figure, imshow(spaceGauss); title(<span class="string">'A Sample Gaussian Spatial Mask'</span>)
+fprintf(<span class="string">'The mask for each image will be different, as the window sizes depend\non the spatial sigma. Here, we have shown a non-normalised mask for \nwindow size 20x20, sigma = 5 '</span>)
+</pre><pre class="codeoutput">The mask for each image will be different, as the window sizes depend
+on the spatial sigma. Here, we have shown a non-normalised mask for 
+window size 20x20, sigma = 5 </pre><img vspace="5" hspace="5" src="myMainScript_10.png" alt=""> <p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2020b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% MyMainScript
+
+
+%% First image: GRASS
+tic;
+fprintf('\nThe images of the grass:\n')
+path1 = "../data/grass.png";
+im1 = imread(path1);
+sp1 = 0.7;
+in1 = 0.18;
+figure, my_show(im1); title('Original image');
+im_noise1 = myNoise(im1);
+figure, my_show(im_noise1); title('Noisy image');
+im_filt1 = myBilateralFiltering(im_noise1,sp1,in1);
+figure, my_show(im_filt1); title('Filtered image');
+rmsd1 = myRMSD(im1,im_filt1);
+rmsd1_i = myRMSD(im1,myBilateralFiltering(im_noise1,0.9*sp1,in1));
+rmsd1_ii = myRMSD(im1,myBilateralFiltering(im_noise1,1.1*sp1,in1));
+rmsd1_iii = myRMSD(im1,myBilateralFiltering(im_noise1,sp1,0.9*in1));
+rmsd1_iv = myRMSD(im1,myBilateralFiltering(im_noise1,sp1,1.1*in1));
+
+fprintf('The optimal values for SpatialSigma and IntensitySigma are:\n')
+fprintf('space_sig = %f , intensity_sig = %f', sp1, in1 )
+fprintf('\nThe optimal rmsd is = %f \n', rmsd1)
+fprintf('The 4 rmsd values for varying standard deviations are :\n')
+fprintf('(0.9sp,in)  i) %f \n',rmsd1_i)
+fprintf('(1.1sp,in)  ii) %f \n',rmsd1_ii)
+fprintf('(sp,0.9in)  iii) %f \n',rmsd1_iii)
+fprintf('(sp,1.1in)  iv) %f \n\n',rmsd1_iv)
+toc;
+
+%% Second image: HONEYCOMB
+tic;
+fprintf('\nFor the honeycomb images:\n')
+path2 = "../data/honeyCombReal.png";
+im2 = imread(path2);
+sp2 = 0.8;
+in2 = 0.1;
+figure, my_show(im2); title('Original image');
+im_noise2 = myNoise(im2);
+figure, my_show(im_noise2); title('Noisy image');
+im_filt2 = myBilateralFiltering(im_noise2,sp2,in2);
+figure, my_show(im_filt2); title('Filtered image');
+rmsd2 = myRMSD(im2,im_filt2);
+rmsd2_i = myRMSD(im2,myBilateralFiltering(im_noise2,0.9*sp2,in2));
+rmsd2_ii = myRMSD(im2,myBilateralFiltering(im_noise2,1.1*sp2,in2));
+rmsd2_iii = myRMSD(im2,myBilateralFiltering(im_noise2,sp2,0.9*in2));
+rmsd2_iv = myRMSD(im2,myBilateralFiltering(im_noise2,sp2,1.1*in2));
+
+fprintf('The optimal values for SpatialSigma and IntensitySigma are:\n')
+fprintf('space_sig = %f , intensity_sig = %f', sp2, in2 )
+fprintf('\nThe optimal rmsd is = %f \n', rmsd2)
+fprintf('The 4 rmsd values for varying standard deviations are :\n')
+fprintf('(0.9sp,in)  i) %f \n',rmsd2_i)
+fprintf('(1.1sp,in)  ii) %f \n',rmsd2_ii)
+fprintf('(sp,0.9in)  iii) %f \n',rmsd2_iii)
+fprintf('(sp,1.1in)  iv) %f \n\n',rmsd2_iv)
+toc;
+
+%% Third image: BARBARA
+tic;
+fprintf('For the Barbara images:\n')
+path = '../data/barbara.mat';
+im3 = uint8(load(path).imageOrig) ;
+%im3 = imread(path3);
+sp3 = 0.9;
+in3 = 0.07;
+figure, my_show(im3); title('Original image');
+im_noise3 = myNoise(im3);
+figure, my_show(im_noise3); title('Noisy image');
+im_filt3 = myBilateralFiltering(im_noise3,sp3,in3);
+figure, my_show(im_filt3); title('Filtered image');
+rmsd3 = myRMSD1(im3,im_filt3);
+rmsd3_i = myRMSD1(im3,myBilateralFiltering(im_noise3,0.9*sp3,in3));
+rmsd3_ii = myRMSD1(im3,myBilateralFiltering(im_noise3,1.1*sp3,in3));
+rmsd3_iii = myRMSD1(im3,myBilateralFiltering(im_noise3,sp3,0.9*in3));
+rmsd3_iv = myRMSD1(im3,myBilateralFiltering(im_noise3,sp3,1.1*in3));
+
+fprintf('The optimal values for SpatialSigma and IntensitySigma are:\n')
+fprintf('space_sig = %f , intensity_sig = %f', sp3, in3 )
+fprintf('\nThe optimal rmsd is = %f \n', rmsd3)
+fprintf('The 4 rmsd values for varying standard deviations are :\n')
+fprintf('(0.9sp,in)  i) %f \n',rmsd3_i)
+fprintf('(1.1sp,in)  ii) %f \n',rmsd3_ii)
+fprintf('(sp,0.9in)  iii) %f \n',rmsd3_iii)
+fprintf('(sp,1.1in)  iv) %f \n\n',rmsd3_iv)
+toc;
+%% SPATIAL MASK GAUSSIAN
+[a,b]=meshgrid(-10:10,-10:10);
+spaceGauss = exp(-(a.^2+b.^2)/(2*5^2));
+figure, imshow(spaceGauss); title('A Sample Gaussian Spatial Mask')
+fprintf('The mask for each image will be different, as the window sizes depend\non the spatial sigma. Here, we have shown a non-normalised mask for \nwindow size 20x20, sigma = 5 ')
+##### SOURCE END #####
+--></body></html>
