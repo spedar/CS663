@@ -1,0 +1,44 @@
+orig_img = imread('noisy_train.jpeg');
+denoised_img = image_denoising(orig_img,1,1,15);
+
+figure ; 
+subplot(1,2,1) ; imshow(orig_img);
+title('Original image');
+
+subplot(1,2,2) ; imshow(denoised_img);
+title('De-noised image');
+
+%%
+
+orig_img = im2double(imread('noisy_taj.jpeg'));
+denoised_img = image_denoising(orig_img,1,1,5);
+
+figure ; 
+subplot(1,2,1) ; imshow(orig_img);
+title('Original image');
+
+subplot(1,2,2) ; imshow(denoised_img);
+title('De-noised image');
+
+
+%%
+orig_img = im2double(imread('guy_head.png'));
+denoised_img = image_denoising(orig_img,3,1,5);
+
+figure ; 
+subplot(1,2,1) ; imshow(orig_img);
+title('Original image');
+
+subplot(1,2,2) ; imshow(denoised_img);
+title('De-noised image');
+
+%%
+orig_img = im2double(imread('noisy_lenna2.jpg'));
+denoised_img = image_denoising(orig_img,5,2,5);
+
+figure ; 
+subplot(1,2,1) ; imshow(orig_img);
+title('Original image');
+
+subplot(1,2,2) ; imshow(denoised_img);
+title('De-noised image');
